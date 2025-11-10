@@ -1,0 +1,109 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 25px 40px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+}
+
+h1 {
+    color: #0056b3;
+    text-align: center;
+}
+
+.controles {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.controles label {
+    font-weight: bold;
+}
+
+.controles input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para la tabla generada */
+#tabla-container {
+    margin-top: 20px;
+    overflow-x: auto; /* Para tablas muy anchas */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Estilo para los inputs dentro de la tabla */
+td input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid transparent;
+    text-align: center;
+    box-sizing: border-box; /* Para que el padding no afecte el ancho */
+}
+
+td input:focus {
+    outline: none;
+    border: 1px solid #007bff;
+    background-color: #e6f2ff;
+}
+
+/* Clases de utilidad de JS */
+.oculto {
+    display: none;
+}
+
+pre {
+    background-color: #282c34;
+    color: #61dafb;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
