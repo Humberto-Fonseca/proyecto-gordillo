@@ -1,0 +1,114 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 25px 40px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
+}
+
+#filas, #columnas{
+    width: 10%;
+}
+
+h1 {
+    color: #0056b3;
+    text-align: center;
+}
+
+.controles {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#datosrandom{
+    margin-left: auto;
+}
+
+/* ... (Estilos de botones, inputs y tabla de entrada como antes) ... */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: #f2f2f2;
+}
+td input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid transparent;
+    text-align: center;
+    box-sizing: border-box;
+}
+td input:focus {
+    outline: none;
+    border: 1px solid #007bff;
+}
+
+/* --- NUEVOS ESTILOS PARA LOS PASOS --- */
+
+.oculto {
+    display: none;
+}
+
+#pasos-container {
+    margin-top: 30px;
+    border-top: 2px solid #007bff;
+    padding-top: 20px;
+}
+
+/* Estilo para cada paso individual */
+.paso {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+}
+
+.paso h3 {
+    color: #0056b3;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.paso table {
+    margin-top: 10px;
+    min-width: 300px;
+}
+
+/* Clases para las líneas y ceros */
+.cero {
+    font-weight: bold;
+    color: #007bff;
+}
+.linea-fila {
+    background-color: rgba(255, 247, 0, 0.702); /* Rojo suave */
+}
+.linea-columna {
+    background-color: rgba(0, 0, 255, 0.1); /* Azul suave */
+}
+.interseccion {
+    /* Las celdas con ambas clases tendrán este estilo */
+    background-color: rgba(0, 199, 230, 0.459); /* Morado */
+}
+.resultado-final {
+    background-color: #50ff1663; /* Amarillo suave */
+    font-weight: bold;
+}

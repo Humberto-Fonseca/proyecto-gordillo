@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodo de asignacion xd</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>¡Metodo de asignacion!</h1>
+        <p>Introduce las dimensiones y los costos.</p>
+
+        <div class="controles">
+            <label for="filas">Filas:</label>
+            <input type="number" id="filas" min="2" value="3" max="10">
+            
+            <label for="columnas">Columnas:</label>
+            <input type="number" id="columnas" value="3" min="2"  max="10">
+            
+            <button id="generarBtn">Generar Tabla</button>
+            <button id="datosrandom" class="oculto"> Generar datos aleatorios</button>
+        </div>
+
+        <div id="tabla-container"></div>
+
+        <button id="resolverBtn" class="oculto">Generar Resultado (Paso a Paso)</button>
+
+        <div id="pasos-container"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
