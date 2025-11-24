@@ -9,15 +9,11 @@ body {
 
 .container {
     background-color: #ffffff;
+    z-index: 3;
     padding: 25px 40px;
     border-radius: 10px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 900px;
-}
-
-#filas, #columnas{
-    width: 10%;
 }
 
 h1 {
@@ -33,82 +29,188 @@ h1 {
     flex-wrap: wrap;
 }
 
-#datosrandom{
-    margin-left: auto;
+/*booooton xd */ 
+.button-52 {
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-/* ... (Estilos de botones, inputs y tabla de entrada como antes) ... */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-th {
-    background-color: #f2f2f2;
-}
-td input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid transparent;
-    text-align: center;
-    box-sizing: border-box;
-}
-td input:focus {
-    outline: none;
-    border: 1px solid #007bff;
+.button-52:after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
 }
 
-/* --- NUEVOS ESTILOS PARA LOS PASOS --- */
-
-.oculto {
-    display: none;
+.button-52:hover:after {
+  top: 0px;
+  left: 0px;
 }
 
+@media (min-width: 768px) {
+  .button-52 {
+    padding: 13px 20px 13px;
+  }
+}
+/*acaba el boton*/
+
+
+/* ... Estilos generales (body, h1, container) iguales ... */
+
+/* --- ESTILOS DE LA TABLA Y RESULTADOS --- */
 #pasos-container {
     margin-top: 30px;
-    border-top: 2px solid #007bff;
+    border-top: 2px solid #333;
     padding-top: 20px;
 }
 
-/* Estilo para cada paso individual */
 .paso {
-    margin-bottom: 25px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 15px;
+    margin-bottom: 40px;
+    border-bottom: 1px dashed #999;
+    padding-bottom: 20px;
 }
 
 .paso h3 {
-    color: #0056b3;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-family: sans-serif;
 }
 
-.paso table {
-    margin-top: 10px;
-    min-width: 300px;
+table {
+    border-collapse: collapse;
+    margin: 10px auto;
+    font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada para alinear 0* y 0' */
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Clases para las líneas y ceros */
-.cero {
+th, td {
+    border: 1px solid #999;
+    padding: 12px 15px;
+    text-align: center;
+    position: relative;
+    min-width: 50px;
+    font-size: 1.1em;
+}
+
+th {
+    background-color: #e0e0e0;
     font-weight: bold;
-    color: #007bff;
 }
-.linea-fila {
-    background-color: rgba(255, 247, 0, 0.702); /* Rojo suave */
+
+/* --- ESTILOS ESPECÍFICOS MUNKRES (PDF) --- */
+
+/* Ceros Estrella (0*) */
+.celda-estrella {
+    color: #d35400; /* Naranja oscuro */
+    font-weight: bold;
 }
-.linea-columna {
-    background-color: rgba(0, 0, 255, 0.1); /* Azul suave */
+
+/* Ceros Prima (0') */
+.celda-prima {
+    color: #8e44ad; /* Morado */
+    font-weight: bold;
 }
-.interseccion {
-    /* Las celdas con ambas clases tendrán este estilo */
-    background-color: rgba(0, 199, 230, 0.459); /* Morado */
+
+/* Ceros normales */
+.celda-cero {
+    color: #333;
+    font-weight: bold;
 }
+
+/* --- LÍNEAS DE CUBIERTA (COVER) --- */
+/* Línea Horizontal (RowCover = 1) */
+.cubierta-fila::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background-color: #2980b9; /* Azul Munkres */
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Línea Vertical (ColCover = 1) */
+.cubierta-columna::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 2px;
+    background-color: #2980b9; /* Azul Munkres */
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Intersección de líneas */
+.interseccion::after, .interseccion::before {
+    background-color: #2980b9;
+}
+
+/* Resultado Final */
 .resultado-final {
-    background-color: #50ff1663; /* Amarillo suave */
+    background-color: #d5f5e3; /* Verde suave */
+    border: 2px solid #27ae60;
+}
+/* Símbolos especiales */
+.estrella {
+    color: #27ae60; /* Verde */
     font-weight: bold;
+}
+.prima {
+    color: #e67e22; /* Naranja */
+    font-weight: bold;
+}
+
+/* Colores de fondo suaves para identificar */
+.celda-estrella {
+    background-color: rgba(39, 174, 96, 0.1);
+}
+.celda-prima {
+    background-color: rgba(230, 126, 34, 0.1);
+}
+
+/* Mantener las líneas de tachado anteriores (rojas) */
+.tachado-fila::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%; width: 100%; height: 2px;
+    background-color: #e74c3c;
+    z-index: 10;
+}
+.tachado-columna::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; height: 100%; width: 2px;
+    background-color: #e74c3c;
+    z-index: 10;
+}
+.interseccion::after, .interseccion::before {
+    /* Cruz */
+    content: ''; position: absolute; background-color: #e74c3c; z-index: 10;
+}
+.interseccion::after { left: 0; top: 50%; width: 100%; height: 2px; }
+.interseccion::before { top: 0; left: 50%; height: 100%; width: 2px; }
+
+/* clase para ocultar */
+.oculto{
+    display: none;
 }
