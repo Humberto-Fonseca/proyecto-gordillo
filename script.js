@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < filas; i++) {
             tabla += `<tr><th>Fila ${i + 1}</th>`;
             for (let j = 0; j < columnas; j++) {
-                let val = (valor === 1) ? Math.floor(Math.random() * 20) + 1 : '';
+                let val = (valor === 1) ? Math.floor(Math.random() * 30) + 1 : '';
                 tabla += `<td><input type="number" class="dato-celda" value="${val}"></td>`;
             }
             tabla += '</tr>';
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pasosContainer.innerHTML = '';
         
         // Paso 0: Matriz Original (Step 0 en PDF)
-        renderizarPaso("Step 0: Matriz de Costos Original", matrizCostos);
+        renderizarPaso(" Matriz de Costos Original", matrizCostos);
         
         // Copia de trabajo
         const matrizTrabajo = matrizCostos.map(fila => [...fila]);
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function mostrarResultadoFinal(matrizOriginal, asignaciones) {
-        let html = `<div class="paso"><h3>DONE: Asignación Óptima</h3>`;
+        let html = `<div class="paso"><h3>Asignación Óptima encontrada </h3>`;
         html += '<p>Los recuadros verdes indican la asignación final (Estrellas).</p><table><tbody>';
 
         html += '<tr><th></th>';
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             html += '</tr>';
         }
         html += '</tbody></table>';
-        html += `<h3>Costo Total Mínimo: ${costoTotal}</h3></div>`;
+        html += `<h4>Costo Total Mínimo: ${costoTotal}</h4></div>`;
         pasosContainer.innerHTML += html;
     }
 
@@ -216,28 +216,28 @@ document.addEventListener('DOMContentLoaded', () => {
             switch (step) {
                 case 1:
                     step = this._step_one(); 
-                    this._registrarPaso("Step 1: Reducción de Filas");
+                    this._registrarPaso(" Reducción de Filas");
                     break;
                 case 2:
                     step = this._step_two();
-                    this._registrarPaso("Step 2: Estrellar Ceros (Asignación Inicial)");
+                    this._registrarPaso("Asignación Inicial");//"Step 2: Estrellar Ceros (Asignación Inicial)"
                     break;
                 case 3:
                     step = this._step_three();
-                    this._registrarPaso("Step 3: Cubrir Columnas con Estrellas");
+                    this._registrarPaso("Cubrir Columnas con 'Estrellas'");
                     break;
                 case 4:
                     step = this._step_four();
                     // Este paso es complejo visualmente porque cambia cubiertas dinámicamente
-                    this._registrarPaso("Step 4: Buscar Ceros Primos (Modificar Cubiertas)");
+                    this._registrarPaso("Buscar Ceros Primos (Modificar Cubiertas)");
                     break;
                 case 5:
                     step = this._step_five();
-                    this._registrarPaso("Step 5: Camino Aumentante (Invertir Estrellas/Primas)");
+                    this._registrarPaso("Camino Aumentante (Invertir Estrellas/Primas)");
                     break;
                 case 6:
                     step = this._step_six();
-                    this._registrarPaso("Step 6: Ajustar Matriz (Sumar/Restar Mínimo)");
+                    this._registrarPaso("Ajustar Matriz (Sumar/Restar Mínimo)");
                     break;
                 case 7:
                     done = true;
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- IMPLEMENTACIÓN DE LOS 6 PASOS (LITERAL PDF) ---
 
-    // Step 1: Subtract min from each row
+    // Paso 1: Subtract min from each row
     SolucionadorHungaro.prototype._step_one = function() {
         for (var r = 0; r < this.nrow; r++) {
             var min_in_row = this.C[r][0];
@@ -445,5 +445,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 m[i][j] = matriz[i][j];
         return m;
     };
+
+    
+    // FUNCIONALIDAD: PEGAR DESDE EXCEL
+    
+    // Escuchamos el evento 'paste' en todo el contenedor de la tabla
+    tablaContainer.addEventListener('paste', function(e) {
+        
+        //Validar que el usuario esté intentando pegar dentro de un input de la tabla
+        if (!e.target.classList.contains('dato-celda')) {
+            return; // Si no está en una celda, no hacemos nada especial
+        }
+        e.preventDefault();
+        //Obtener los datos del portapapeles
+        const clipboardData = e.clipboardData || window.clipboardData;
+        const textoPegado = clipboardData.getData('Text');
+        //Procesar los datos (Excel usa \n para filas y \t para columnas)
+        const filasDatos = textoPegado.trim().split(/\r\n|\n|\r/);
+        
+        //Obtener información de la tabla actual
+        const numColumnasTabla = parseInt(columnasInput.value);
+        const inputs = Array.from(tablaContainer.querySelectorAll('input.dato-celda'));
+        
+        // Encontrar en qué input estaba el usuario cuando presionó Ctrl+V
+        const inputInicial = e.target;
+        const indiceInicial = inputs.indexOf(inputInicial);
+        
+        // Calcular fila y columna de inicio basándonos en el índice plano del array
+        const filaInicio = Math.floor(indiceInicial / numColumnasTabla);
+        const colInicio = indiceInicial % numColumnasTabla;
+
+        //Iterar sobre los datos pegados e inyectarlos
+        filasDatos.forEach((filaString, i) => {
+            const valores = filaString.split('\t'); // Separar por tabulaciones
+
+            valores.forEach((valor, j) => {
+                // Coordenadas destino
+                const filaDestino = filaInicio + i;
+                const colDestino = colInicio + j;
+
+                // Calcular el índice en el array plano de inputs
+                const indiceDestino = (filaDestino * numColumnasTabla) + colDestino;
+
+                // Verificar límites (que no nos salgamos de la tabla HTML)
+                // y verificar que estamos en la misma fila lógica (evita salto de línea erróneo)
+                if (indiceDestino < inputs.length && colDestino < numColumnasTabla) {
+                    const inputDestino = inputs[indiceDestino];
+                    
+                    // Limpieza de datos:
+                    // Excel a veces usa coma para decimales (dependiendo del idioma), 
+                    // JS prefiere punto. Reemplazamos coma por punto si es necesario.
+                    let numeroLimpio = valor.replace(',', '.');
+                    
+                    // Validar que sea número, si no, poner 0
+                    inputDestino.value = parseFloat(numeroLimpio) || 0;
+                    
+                    // Efecto visual opcional: resaltar brevemente lo pegado
+                    inputDestino.style.backgroundColor = "#e8f0fe";
+                    setTimeout(() => inputDestino.style.backgroundColor = "", 500);
+                }
+            });
+        });
+    });
 
 });
